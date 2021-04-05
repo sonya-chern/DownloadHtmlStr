@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.0-preview.2.21154.6" />
+  </ItemGroup>
+
 </Project>
