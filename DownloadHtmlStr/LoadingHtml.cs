@@ -29,6 +29,10 @@ namespace DownloadHtmlStr
             return _ramCounter.NextValue();
         }
 
+        private static void ReadByLine()
+        {
+            
+        }
         public static bool GetFile()                                                 //получение и скачивание файла в документ .txt
         {
             WebClient client = new WebClient();
@@ -43,30 +47,21 @@ namespace DownloadHtmlStr
                         if (ramCounter > contentLengthHtml) client.DownloadFileAsync(adressUrl, nameFile);
                         else
                         {
-
+                            ReadByLine();                                          //запись по строчно 
                         }
                     }
                     catch(OutOfMemoryException)
                     {
-
+                        ReadByLine();
                     }
                 }
-                    
-                      
-
                 return true;
             }
-            catch (System.ArgumentException)
+            catch (Exception e)
             {
-                Console.WriteLine("The path is empty");
+                Console.WriteLine("Exception: " + e.Message);
                 return false;
             }
-            catch (System.IO.FileNotFoundException)
-            {
-                Console.WriteLine("Could not find file");
-                return false;
-            }
-            
         }
     }
 }
