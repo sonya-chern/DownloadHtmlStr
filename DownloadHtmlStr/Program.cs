@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Net;
-using System.Threading.Tasks;
-using System.Linq;
 
 namespace DownloadHtmlStr
 {
@@ -16,8 +12,15 @@ namespace DownloadHtmlStr
                 ClearingFromTags clearingFromTags = new ClearingFromTags();
                 WordsCountStatistics wordsCountStatistics = new WordsCountStatistics(clearingFromTags.ClearText());
                 wordsCountStatistics.ShowDictionary();
-                MyDataBase myDataBase = new MyDataBase();
-                myDataBase.CreatDataBasesStatistics(wordsCountStatistics.GetDictionary());
+                try
+                {
+                    MyDataBase myDataBase = new MyDataBase();
+                    myDataBase.CreatDataBasesStatistic(wordsCountStatistics.GetDictionary());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception: " + e.Message);
+                }
             }
         }
     }

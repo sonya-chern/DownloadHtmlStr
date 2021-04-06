@@ -5,14 +5,49 @@ using System.Diagnostics;
 
 namespace DownloadHtmlStr
 {
-    class LoadingHtml                                                        // класс загружает страницу html в текстовый файл
+    /// <summary>
+    /// класс LoadingHtml загружает страницу html в текстовый файл
+    /// </summary>
+
+    class LoadingHtml
     {
-        private Uri adressUrl;
         public static string nameFile = "update.txt";
+        private Uri adressUrl;
 
         public LoadingHtml(string adressUrlFromUser)
         {
             adressUrl = new Uri(adressUrlFromUser);
+        }
+
+        public bool GetFile()
+        {
+            WebClient client = new WebClient();
+            try
+            {
+                bool didIt = false;
+                if (!File.Exists(nameFile))
+                {
+                    var ramCounter = GetRamCounter();
+                    var contentLengthHtml = GetContentLengthHtml();
+                    try
+                    {
+                        if (ramCounter > contentLengthHtml)
+                            client.DownloadFile(adressUrl, nameFile);
+                        didIt = true;
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine("Exception: " + e.Message);
+                        didIt = false;
+                    }
+                }
+                return didIt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+                return false;
+            }
         }
 
         private float GetContentLengthHtml()
@@ -27,41 +62,6 @@ namespace DownloadHtmlStr
         {
             PerformanceCounter _ramCounter = new PerformanceCounter("Memory", "Available Bytes");
             return _ramCounter.NextValue();
-        }
-
-        private void ReadByLine()
-        {
-            
-        }
-        public bool GetFile()                                                 //получение и скачивание файла в документ .txt
-        {
-            WebClient client = new WebClient();
-            try
-            {
-                if (!File.Exists(nameFile))
-                {
-                    var ramCounter = GetRamCounter();                               //получение данных о свободной RAM
-                    var contentLengthHtml = GetContentLengthHtml();                 //получение данных об объеме скачиваемого документа
-                    try
-                    {
-                        if (ramCounter > contentLengthHtml) client.DownloadFileAsync(adressUrl, nameFile);
-                        else
-                        {
-                            ReadByLine();                                          //запись по строчно 
-                        }
-                    }
-                    catch(OutOfMemoryException)
-                    {
-                        ReadByLine();
-                    }
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-                return false;
-            }
         }
     }
 }
