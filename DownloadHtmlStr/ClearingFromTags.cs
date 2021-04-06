@@ -7,7 +7,7 @@ namespace DownloadHtmlStr
 {
     class ClearingFromTags                          //чистит текст от тегов и возвращает строку текста
     {
-        private readonly static Dictionary<string, string> tagsHtml = new Dictionary<string, string>
+        private readonly Dictionary<string, string> tagsHtml = new Dictionary<string, string>
             {
                 {"<script", "</script>"},
                 {"<noscript", "</noscript>"},
@@ -15,7 +15,7 @@ namespace DownloadHtmlStr
                 {"<path", "/>"},
                 {"<img", ">"}
             };
-        private static string DeleteBetweenTags(string withoutTags, string beginTag, string endTag) //удаляет все между заданных тегов
+        private string DeleteBetweenTags(string withoutTags, string beginTag, string endTag) //удаляет все между заданных тегов
         {
             int findInd, findInd2;
             while (true)
@@ -31,12 +31,12 @@ namespace DownloadHtmlStr
             return withoutTags;
         }
 
-        private static string DeleteWithRegex(string cleanedSmth, string regx, string toReplace)
+        private string DeleteWithRegex(string cleanedSmth, string regx, string toReplace)
         {
             return Regex.Replace(cleanedSmth, regx, toReplace);
         }
 
-        public static string ClearText()
+        public string ClearText()
         {
             string allText = File.ReadAllText(LoadingHtml.nameFile);
             var withoutHead = allText.Remove(0, allText.IndexOf("<body", StringComparison.InvariantCulture));

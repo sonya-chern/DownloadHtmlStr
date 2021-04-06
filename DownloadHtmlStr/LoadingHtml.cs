@@ -7,7 +7,7 @@ namespace DownloadHtmlStr
 {
     class LoadingHtml                                                        // класс загружает страницу html в текстовый файл
     {
-        private static Uri adressUrl;
+        private Uri adressUrl;
         public static string nameFile = "update.txt";
 
         public LoadingHtml(string adressUrlFromUser)
@@ -15,7 +15,7 @@ namespace DownloadHtmlStr
             adressUrl = new Uri(adressUrlFromUser);
         }
 
-        private static float GetContentLengthHtml()
+        private float GetContentLengthHtml()
         {
             var webRequest = HttpWebRequest.Create(adressUrl);
             webRequest.Method = "HEAD";
@@ -23,17 +23,17 @@ namespace DownloadHtmlStr
             return float.Parse(webResponse.Headers.Get("Content-Length"));
         }
 
-        private static float GetRamCounter()
+        private float GetRamCounter()
         {
             PerformanceCounter _ramCounter = new PerformanceCounter("Memory", "Available Bytes");
             return _ramCounter.NextValue();
         }
 
-        private static void ReadByLine()
+        private void ReadByLine()
         {
             
         }
-        public static bool GetFile()                                                 //получение и скачивание файла в документ .txt
+        public bool GetFile()                                                 //получение и скачивание файла в документ .txt
         {
             WebClient client = new WebClient();
             try

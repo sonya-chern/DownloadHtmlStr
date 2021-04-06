@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.113.7" />
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.0-preview.2.21154.6" />
   </ItemGroup>
 

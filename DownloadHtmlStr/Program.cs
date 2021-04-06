@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace DownloadHtmlStr
 {
     class Program
     {
-        static void Main(string[] args)
+         static void Main(string[] args)
         {
-            _ = new LoadingHtml("https://samara.itstep.org/");
-            if (LoadingHtml.GetFile())
+            LoadingHtml loadingHtml = new LoadingHtml("https://samara.itstep.org/");
+            if (loadingHtml.GetFile())
             {
-                _ = new WordsCountStatistics(ClearingFromTags.ClearText());
-                WordsCountStatistics.ShowDictionary();
+                ClearingFromTags clearingFromTags = new ClearingFromTags();
+                WordsCountStatistics wordsCountStatistics = new WordsCountStatistics(clearingFromTags.ClearText());
+                wordsCountStatistics.ShowDictionary();
+                MyDataBase myDataBase = new MyDataBase();
+                myDataBase.CreatDataBasesStatistics(wordsCountStatistics.GetDictionary());
             }
         }
     }
