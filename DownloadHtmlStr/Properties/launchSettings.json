@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "DownloadHtmlStr": {
+      "commandName": "Project",
+      "commandLineArgs": "\"https://www.simbirsoft.com/\"",
+      "nativeDebugging": true
+    }
+  }
+}

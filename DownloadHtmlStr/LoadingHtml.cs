@@ -25,8 +25,10 @@ namespace DownloadHtmlStr
             try
             {
                 bool didIt = false;
-                if (!File.Exists(nameFile))
+                if (File.Exists(nameFile))
                 {
+                    File.Delete(nameFile); 
+                }
                     var ramCounter = GetRamCounter();
                     var contentLengthHtml = GetContentLengthHtml();
                     try
@@ -37,14 +39,15 @@ namespace DownloadHtmlStr
                     }
                     catch(Exception e)
                     {
+                        Console.WriteLine("in download ram");
                         Console.WriteLine("Exception: " + e.Message);
                         didIt = false;
                     }
-                }
                 return didIt;
             }
             catch (Exception e)
             {
+                Console.WriteLine("in download");
                 Console.WriteLine("Exception: " + e.Message);
                 return false;
             }
@@ -55,7 +58,9 @@ namespace DownloadHtmlStr
             var webRequest = HttpWebRequest.Create(adressUrl);
             webRequest.Method = "HEAD";
             var webResponse = webRequest.GetResponse();
-            return float.Parse(webResponse.Headers.Get("Content-Length"));
+            string str = webResponse.Headers.Get("Content-Length");
+            if (str == null) return 0;
+            else return float.Parse(webResponse.Headers.Get("Content-Length"));
         }
 
         private float GetRamCounter()

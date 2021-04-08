@@ -10,7 +10,7 @@ namespace DownloadHtmlStr
 
     class MyDataBase
     {
-        private readonly string connectionBd = "Data Source = C:\\Users\\Sofia\\Desktop\\C#\\DownloadHtmlStr\\TestDB.db; Version = 3; ";
+        private readonly string connectionBd = "Data Source = TestDB.db; Version = 3; ";
         private SQLiteConnection Connect;
 
         public MyDataBase()
@@ -34,9 +34,10 @@ namespace DownloadHtmlStr
         }
         private void CreatEmptyDataBase()
         {
-            if (!File.Exists(@"C:\Users\Sofia\Desktop\C#\DownloadHtmlStr\TestDB.db"))
+            if (File.Exists(@"TestDB.db"))
             {
-                SQLiteConnection.CreateFile(@"C:\Users\Sofia\Desktop\C#\DownloadHtmlStr\TestDB.db");
+                File.Delete(@"TestDB.db");
+                SQLiteConnection.CreateFile(@"TestDB.db");
             }
             using (SQLiteConnection Connect = new SQLiteConnection(connectionBd))
             {
